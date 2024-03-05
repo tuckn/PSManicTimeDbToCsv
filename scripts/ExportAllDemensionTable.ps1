@@ -1,4 +1,4 @@
-﻿using module "..\modules\ExportManicTimeDb.psm1"
+﻿using module "..\modules\ExportDemensionTable.psm1"
 
 Param(
     [Parameter(Position = 0)]
@@ -8,15 +8,9 @@ Param(
     [String] $DbPath,
 
     [Parameter(Position = 2)]
-    [string] $YearMonth,
-
-    [Parameter(Position = 3)]
-    [string] $TableName,
-
-    [Parameter(Position = 4)]
     [String] $DestDirPath,
 
-    [Parameter(Position = 5)]
+    [Parameter(Position = 3)]
     [String] $ConfJsonPath
 )
 
@@ -44,13 +38,29 @@ if (Test-Path -LiteralPath $ConfJsonPath) {
     }
 }
 
+$params = @{
+    SqlitePath = $SqlitePath
+    DbPath = $DbPath
+    TableName = "Ar_CommonGroup"
+    ColumnNamesString = "CommonId, ReportGroupType, KeyHash, GroupType, Key, Name, Color, IsBillable, UpperKey"
+    DestDirPath = $DestDirPath
+}
+Export-DemensionTable @params
 
 $params = @{
     SqlitePath = $SqlitePath
     DbPath = $DbPath
-    YearMonth = $YearMonth
-    TableName = $TableName
+    TableName = "Ar_Group"
+    ColumnNamesString = "ReportId, GroupId, ReportGroupType, KeyHash, Key, Name, Color, SkipColor, FolderId, GroupType, IsBillable, CommonId, SourceId, CurrentChangeSequence, CurrentChangeRandomValue, Other"
     DestDirPath = $DestDirPath
 }
+Export-DemensionTable @params
 
-Export-ManicTimeDbToCsv @params
+$params = @{
+    SqlitePath = $SqlitePath
+    DbPath = $DbPath
+    TableName = "Ar_Folder"
+    ColumnNamesString = "*"
+    DestDirPath = $DestDirPath
+}
+Export-DemensionTable @params

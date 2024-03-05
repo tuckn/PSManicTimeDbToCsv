@@ -10,7 +10,7 @@
 			"request": "launch",
 			"script": "${file}",
 			"cwd": "${file}",
-      "args": ["--Force", "REG_DT"]
+      "args": ["--TableName", "Ar_Activity", "--YearMonth", "2022-10"]
       // "postDebugTask": ["Set-ExecutionPolicy", "-ExecutionPolicy", "AllSigned", "-Scope", "Process"]
 		}
 	]
