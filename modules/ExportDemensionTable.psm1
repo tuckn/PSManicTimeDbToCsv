@@ -4,30 +4,33 @@ Set-StrictMode -Version 2.0
 function Export-DemensionTable {
 <#
 .SYNOPSIS
-Exports data from a specified table in a SQLite database to a CSV file, filtering records based on a given year and month.
+Exports specified columns from a table in a SQLite database to a CSV file.
 
 .DESCRIPTION
-This PowerShell function, Export-DemensionTable, utilizes SQLite to query data from a specified table within a database. It exports records that match a specific year and month to a CSV file. The function dynamically creates directories for the table and year if they don't already exist, placing the resulting CSV file within these directories. It supports custom paths for the SQLite executable and the destination directory. If not specified, it defaults to using the SQLite command available in the system path and the script's root directory as the destination.
+The `Export-DemensionTable` function utilizes the SQLite command-line tool to export data from a specified table within a SQLite database. It allows users to specify which columns to export through a string of column names. The function dynamically creates a directory for the export if it doesn't exist and places the resulting CSV file within this directory. It's designed for flexibility in specifying the SQLite executable path, the database path, table name, columns to export, and the destination directory for the CSV output.
 
 .PARAMETER SqlitePath
-The path to the SQLite executable. If not provided, the script assumes `sqlite3` is available in the system path.
+The path to the SQLite executable. If not provided, it defaults to `sqlite3`, assuming it's available in the system path.
 
 .PARAMETER DbPath
-Mandatory. The path to the SQLite database file.
+Mandatory. The path to the SQLite database file from which data will be exported.
 
 .PARAMETER TableName
-Mandatory. The name of the table from which to export data.
+Mandatory. The name of the table to export data from.
+
+.PARAMETER ColumnNamesString
+Mandatory. A string listing the columns to include in the export. Columns should be separated by commas.
 
 .PARAMETER DestDirPath
-The path to the directory where the CSV file will be saved. Defaults to the script's root directory if not provided.
+The directory where the CSV file will be saved. If not provided, it defaults to the script's root directory. If the specified directory does not exist, the function will terminate with an error.
 
 .EXAMPLE
 ```powershell
-Export-DemensionTable -DbPath "C:\ManicTime\Data\ManicTimeReports.db" -TableName "Ar_Activity" -ColumnName "StartLocalTime" -YearMonth "2024-01" -DestDirPath "C:\exports"
+Export-DemensionTable -SqlitePath "C:\sqlite\sqlite3.exe" -DbPath "C:\ManicTime\Data\ManicTimeReports.db" -TableName "Ar_CommonGroup" -ColumnNamesString "CommonId, ReportGroupType, KeyHash, GroupType, Key, Name, Color" -DestDirPath "C:\exports"
 ```
-This example exports data from the "Activity" table in the "manictime.db" database, filtering records from January 2024. The resulting CSV file is saved in "C:\exports".
+This example exports the `id`, `username`, and `email` columns from the `users` table in the `mydatabase.db` SQLite database. The CSV file is saved in the `C:\exports\Demensions` directory with the name `users.csv`. If the `Demensions` directory does not exist in `C:\exports`, it will be created.
 
-This script is intended for users who need to regularly export filtered data from a SQLite database to CSV format, such as for reporting or data analysis purposes. It automates the process of directory creation and file naming based on the table name and specified year and month, streamlining the workflow for recurring exports.
+This script streamlines the process of exporting specific table columns to CSV format, making it valuable for data extraction and reporting tasks.
 ```
 #>
     [CmdletBinding()]
