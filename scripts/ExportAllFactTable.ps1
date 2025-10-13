@@ -1,4 +1,6 @@
-﻿using module "..\modules\ExportFactTable.psm1"
+﻿#Requires -Version 6.0
+
+using module "..\ManicTimeDbToCsv.psm1"
 
 Param(
     [Parameter(Position = 0)]

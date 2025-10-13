@@ -1,4 +1,5 @@
 ﻿$ErrorActionPreference = "Stop"
+$PSNativeCommandUseErrorActionPreference = $true  # PS7.3+
 Set-StrictMode -Version 2.0
 
 function Export-ManicTimeFactDbToCsv {

@@ -1,4 +1,6 @@
-﻿using module "..\modules\ExportDemensionTable.psm1"
+﻿#Requires -Version 6.0
+
+using module "..\ManicTimeDbToCsv.psm1"
 
 Param(
     [Parameter(Position = 0)]
@@ -45,7 +47,7 @@ $params = @{
     ColumnNamesString = "CommonId, ReportGroupType, KeyHash, GroupType, Key, Name, Color, IsBillable, UpperKey"
     DestDirPath = $DestDirPath
 }
-Export-DemensionTable @params
+Export-DimensionTable @params
 
 $params = @{
     SqlitePath = $SqlitePath
@@ -54,7 +56,7 @@ $params = @{
     ColumnNamesString = "ReportId, GroupId, ReportGroupType, KeyHash, Key, Name, Color, SkipColor, FolderId, GroupType, IsBillable, CommonId, SourceId, CurrentChangeSequence, CurrentChangeRandomValue, Other"
     DestDirPath = $DestDirPath
 }
-Export-DemensionTable @params
+Export-DimensionTable @params
 
 $params = @{
     SqlitePath = $SqlitePath
@@ -63,4 +65,4 @@ $params = @{
     ColumnNamesString = "*"
     DestDirPath = $DestDirPath
 }
-Export-DemensionTable @params
+Export-DimensionTable @params

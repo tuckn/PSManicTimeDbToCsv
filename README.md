@@ -28,7 +28,7 @@ Copy-Item .\scripts\config_sample.json .\scripts\config.json
 pwsh .\scripts\ExportAllFactTable.ps1
 
 # Export all dimension tables
-pwsh .\scripts\ExportAllDemensionTable.ps1
+pwsh .\scripts\ExportAllDimensionTable.ps1
 ```
 
 ## Usage Examples (no config file)
@@ -44,7 +44,7 @@ pwsh .\scripts\ExportAllFactTable.ps1 \
   -YearMonth 2024-07
 
 # All dimension tables
-pwsh .\scripts\ExportAllDemensionTable.ps1 \
+pwsh .\scripts\ExportAllDimensionTable.ps1 \
   -SqlitePath .\bin\sqlite3.exe \
   -DbPath "C:\\Program Files\\ManicTime\\Data\\ManicTimeReports.db" \
   -DestDirPath "$env:USERPROFILE\\logs\\ManicTime"
@@ -81,7 +81,7 @@ Override location with `-ConfJsonPath`:
 
 ```powershell
 pwsh .\scripts\ExportAllFactTable.ps1 -ConfJsonPath "D:\\cfg\\manictime.json"
-pwsh .\scripts\ExportAllDemensionTable.ps1 -ConfJsonPath "D:\\cfg\\manictime.json"
+pwsh .\scripts\ExportAllDimensionTable.ps1 -ConfJsonPath "D:\\cfg\\manictime.json"
 pwsh .\scripts\ExportFactTable.ps1 -TableName Ar_Activity -ColumnName StartLocalTime -YearMonth 2024-07 -ConfJsonPath "D:\\cfg\\manictime.json"
 ```
 
@@ -99,7 +99,7 @@ Precedence: Command-line parameters override config values. For any parameter no
   - `Ar_WebSiteByDay` (`Hour`)
   - `Ar_WebSiteByYear` (`Hour`)
 
-- All Dimension Tables (`scripts/ExportAllDemensionTable.ps1`):
+- All Dimension Tables (`scripts/ExportAllDimensionTable.ps1`):
   - `Ar_CommonGroup`
   - `Ar_Group`
   - `Ar_Folder`
@@ -108,8 +108,8 @@ Precedence: Command-line parameters override config values. For any parameter no
 
 - Fact tables: `DestDir\<TableName>\<YYYY>\<MM>.csv`
   - Example: `C:\exports\Ar_Activity\2024\01.csv`
-- Dimension tables: `DestDir\Demensions\<TableName>.csv`
-  - Example: `C:\exports\Demensions\Ar_CommonGroup.csv`
+- Dimension tables: `DestDir\Dimensions\<TableName>.csv`
+  - Example: `C:\exports\Dimensions\Ar_CommonGroup.csv`
 
 ## Avoiding Garbled Japanese Characters (mojibake)
 
@@ -128,7 +128,7 @@ Import-Module .\ManicTimeDbToCsv.psm1
 Export-ManicTimeFactDbToCsv -DbPath "C:\\...\\ManicTimeReports.db" -TableName Ar_Activity -ColumnName StartLocalTime -YearMonth 2024-01 -DestDirPath "C:\\exports"
 
 # Dimension example
-Export-DemensionTable -DbPath "C:\\...\\ManicTimeReports.db" -TableName Ar_CommonGroup -ColumnNamesString "CommonId,Name,Color" -DestDirPath "C:\\exports"
+Export-DimensionTable -DbPath "C:\\...\\ManicTimeReports.db" -TableName Ar_CommonGroup -ColumnNamesString "CommonId,Name,Color" -DestDirPath "C:\\exports"
 ```
 
 ## License

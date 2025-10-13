@@ -1,13 +1,14 @@
 ﻿$ErrorActionPreference = "Stop"
+$PSNativeCommandUseErrorActionPreference = $true  # PS7.3+
 Set-StrictMode -Version 2.0
 
-function Export-DemensionTable {
+function Export-DimensionTable {
 <#
 .SYNOPSIS
 Exports specified columns from a table in a SQLite database to a CSV file.
 
 .DESCRIPTION
-The `Export-DemensionTable` function utilizes the SQLite command-line tool to export data from a specified table within a SQLite database. It allows users to specify which columns to export through a string of column names. The function dynamically creates a directory for the export if it doesn't exist and places the resulting CSV file within this directory. It's designed for flexibility in specifying the SQLite executable path, the database path, table name, columns to export, and the destination directory for the CSV output.
+The `Export-DimensionTable` function utilizes the SQLite command-line tool to export data from a specified table within a SQLite database. It allows users to specify which columns to export through a string of column names. The function dynamically creates a directory for the export if it doesn't exist and places the resulting CSV file within this directory. It's designed for flexibility in specifying the SQLite executable path, the database path, table name, columns to export, and the destination directory for the CSV output.
 
 .PARAMETER SqlitePath
 The path to the SQLite executable. If not provided, it defaults to `sqlite3`, assuming it's available in the system path.
@@ -26,9 +27,9 @@ The directory where the CSV file will be saved. If not provided, it defaults to 
 
 .EXAMPLE
 ```powershell
-Export-DemensionTable -SqlitePath "C:\sqlite\sqlite3.exe" -DbPath "C:\ManicTime\Data\ManicTimeReports.db" -TableName "Ar_CommonGroup" -ColumnNamesString "CommonId, ReportGroupType, KeyHash, GroupType, Key, Name, Color" -DestDirPath "C:\exports"
+Export-DimensionTable -SqlitePath "C:\sqlite\sqlite3.exe" -DbPath "C:\ManicTime\Data\ManicTimeReports.db" -TableName "Ar_CommonGroup" -ColumnNamesString "CommonId, ReportGroupType, KeyHash, GroupType, Key, Name, Color" -DestDirPath "C:\exports"
 ```
-This example exports the `id`, `username`, and `email` columns from the `users` table in the `mydatabase.db` SQLite database. The CSV file is saved in the `C:\exports\Demensions` directory with the name `users.csv`. If the `Demensions` directory does not exist in `C:\exports`, it will be created.
+This example exports the `id`, `username`, and `email` columns from the `users` table in the `mydatabase.db` SQLite database. The CSV file is saved in the `C:\exports\Dimensions` directory with the name `users.csv`. If the `Dimensions` directory does not exist in `C:\exports`, it will be created.
 
 This script streamlines the process of exporting specific table columns to CSV format, making it valuable for data extraction and reporting tasks.
 ```
@@ -67,7 +68,7 @@ This script streamlines the process of exporting specific table columns to CSV f
         }
         Write-Host "[info] DestDirPath: $DestDirPath"
 
-        [string] $tableDirPath = Join-Path -Path $DestDirPath -ChildPath "Demensions"
+        [string] $tableDirPath = Join-Path -Path $DestDirPath -ChildPath "Dimensions"
         Write-Host "[info] tableDirPath: $tableDirPath"
 
         # ディレクトリが存在しない場合は作成
@@ -97,4 +98,4 @@ This script streamlines the process of exporting specific table columns to CSV f
         return
     }
 }
-Export-ModuleMember -Function Export-DemensionTable
+Export-ModuleMember -Function Export-DimensionTable
